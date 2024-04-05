@@ -6,12 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>hangmanGame</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <button id="resetCache" class="other">reset</button>
     <button id="play" class="other">Play</button>
+    <div id="game">
 
+    </div>
+
+    <div id="notCompatible"></div>
     <div id="hangman">
 
         <svg width="1920" height="1080" viewBox="0 0 1920 1080" version="1.1" id="base" class="parts"
@@ -121,9 +130,9 @@
             </g>
         </svg>
     </div>
-    <div id="game">
 
-    </div>
+
+
     <div id="keyboard">
         <button id="a" class="key">A</button>
         <button id="z" class="key">Z</button>
@@ -153,7 +162,6 @@
         <button id="n" class="key">N</button>
     </div>
     </div>
-    <a href="./data.json">data</a>
     <script src="./index.js"></script>
 </body>
 
