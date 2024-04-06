@@ -1,4 +1,4 @@
-const resteCache = document.getElementById("resetCache")
+// const resteCache = document.getElementById("resetCache")
 const url = "./data.json"
 var data = localStorage.getItem("data")
 const body = document.body
@@ -7,6 +7,7 @@ const key = document.querySelectorAll(".key")
 const game = document.getElementById("game")
 const play = document.getElementById("play")
 const hangman = document.getElementById("hangman").children;
+// const hangmanColor = querySelectorAll("rect")
 const looseTile = document.getElementById("loose")
 const winTitle = document.getElementById("win")
 var word
@@ -111,7 +112,6 @@ function init() {
 
 }
 function looseGame(word) {
-    debugger
     reset(word)
     write(word)
     looseTile.style.display = "block"
@@ -176,12 +176,6 @@ function reset(word) {
         game.removeChild(game.lastElementChild)
     }
 }
-
-
-resteCache.addEventListener('click', () => {
-    localStorage.clear("data")
-    console.log("LocalStorage cleared");
-})
 
 play.addEventListener('click', () => {
     const word = JSON.parse(localStorage.getItem("word"))
