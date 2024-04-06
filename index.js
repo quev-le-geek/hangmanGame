@@ -7,8 +7,9 @@ const key = document.querySelectorAll(".key")
 const game = document.getElementById("game")
 const play = document.getElementById("play")
 const hangman = document.getElementById("hangman").children;
+const looseTile = document.getElementById("loose")
+const winTitle = document.getElementById("win")
 var word
-var lastWordLenght
 var dbLength = 1000
 var listenerSet = false
 var life = 0
@@ -43,22 +44,22 @@ function saveToLs(data) {
 
 function chooseWord() { //return a random word from the list
     var random
-    console.log(random >= data.data.length == false);
+    // console.log(random >= data.data.length == false);
     while (random <= data.data.length == false) {
         random = Math.round(Math.random() * dbLength)
     }
-    console.log(random);
+    // console.log(random);
     const word = data.data[random]
     return word
     console.log(word);
 }
 
-function write(word, foundLetters) {
-    console.log(word.length);
-    for (let i = 0; i < word.length; i++) {
+function write(wordToWrite) {
+    // console.log(wordToWrite.length);
+    for (let i = 0; i < wordToWrite.length; i++) {
         var newP = document.createElement("p")
         newP.setAttribute("class", "letter")
-        var newText = document.createTextNode(foundLetters[i].toUpperCase())
+        var newText = document.createTextNode(wordToWrite[i].toUpperCase())
         newP.appendChild(newText)
         game.appendChild(newP)
     }
@@ -66,42 +67,55 @@ function write(word, foundLetters) {
 
 function setListerners() {
     document.addEventListener("keypress", (e) => {
-        keyPress(e.key)
+        keyPress(e.key, e.key.charCodeAt(0) - 97)
     })
     for (let i = 0; i < 26; i++) {
         key[i].addEventListener('click', () => {
-            keyPress(key[i].id)
+            keyPress(key[i].id, i)
         })
     }
     listenerSet = true
 }
 
+function removeListeners(keyName, index) {
+    var usedLetters = JSON.parse(localStorage.getItem("usedLetters"))
+    usedLetters[index] = keyName
+    localStorage.setItem("usedLetters", JSON.stringify(usedLetters))
+    const oldAtributes = keyName[index].className
+    keyName[index].className = oldAtributes + " played"
+}
+
 
 function init() {
-    console.log(listenerSet)
+    // console.log(listenerSet)
     if (listenerSet == false) {
         setListerners()
     }
     console.time("ça prend")
-    console.log(data.data.length);
+    // console.log(data.data.length);
     var foundLetters = []
     const word = chooseWord().split("")
     localStorage.setItem("word", JSON.stringify(word))
-    lastWordLenght = word.length
     for (let i = 0; i < word.length; i++) {
         foundLetters.push(" ")
     }
-    write(word, foundLetters)
+    write(foundLetters)
     localStorage.setItem("foundLetters", JSON.stringify(foundLetters))
+    localStorage.setItem("numberOfFoundLetters", JSON.stringify(0))
+    localStorage.setItem("usedLetters",JSON.stringify(["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]))
+    console.log(word)
 
     // console.log(key);
 
-    console.log(word);
     console.timeEnd("ça prend")
 
 }
-function looseGame() {
-    console.log("you loose");
+function looseGame(word) {
+    debugger
+    reset(word)
+    write(word)
+    looseTile.style.display = "block"
+
 }
 
 function looseLife() {
@@ -110,37 +124,55 @@ function looseLife() {
 
 }
 
-function keyPress(key) {
-    console.log("key", key);
+function winGame() {
+    winTitle.style.display = "block"
+}
+
+function keyPress(keyName, number) {
+    var usedLetters = JSON.parse(localStorage.getItem("usedLetters"))
     var found = false
     var foundLetters = JSON.parse(localStorage.getItem("foundLetters"))
+    var numberOfFoundLetters = JSON.parse(localStorage.getItem("numberOfFoundLetters"))
     const word = JSON.parse(localStorage.getItem("word"))
-    if (life < 10) {
+    console.log("usedLetters[",number,"] == ''", usedLetters[number] == "");
+    if (life <= 9 && usedLetters[number] == "") {
         for (let i = 0; i < word.length; i++) {
             const letter = word[i];
-            if (key == letter) {
-                foundLetters[i] = key
+            if (keyName == letter) {
+                foundLetters[i] = keyName
                 console.log(foundLetters);
                 found = true
+                numberOfFoundLetters++
             }
         }
+        console.log(word == foundLetters, word[1] === foundLetters[1]);
+        console.log(life);
+        if (found == false) {
+            looseLife()
+        }
+
+        // console.log("numberOfFoundLetters",numberOfFoundLetters)
+        if (numberOfFoundLetters == word.length) {
+            winGame()
+        }
+    }
+    if (life == 10) {
+        looseGame(word)
+    }
+    else {
+        reset(foundLetters)
+        write(foundLetters)
     }
 
     localStorage.setItem("foundLetters", JSON.stringify(foundLetters))
-    reset()
-    console.log(word, foundLetters);
-    write(word, foundLetters)
+    localStorage.setItem("numberOfFoundLetters", JSON.stringify(numberOfFoundLetters))
+    localStorage.setItem("usedLetters", JSON.stringify(usedLetters))
+    removeListeners(key, number)
 
-    if (found == false && life < 10) {
-        looseLife()
-    }
-    else {
-        looseGame()
-    }
 }
 
-function reset() {
-    for (let i = 0; i < lastWordLenght; i++) {
+function reset(word) {
+    for (let i = 0; i < word.length; i++) {
         game.removeChild(game.lastElementChild)
     }
 }
@@ -152,7 +184,8 @@ resteCache.addEventListener('click', () => {
 })
 
 play.addEventListener('click', () => {
-    reset()
+    const word = JSON.parse(localStorage.getItem("word"))
+    reset(word)
     init()
 })
 

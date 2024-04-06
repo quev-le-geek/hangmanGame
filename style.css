@@ -23,10 +23,10 @@ button {
 #game {
     /* border: 1px #fff solid; */
     display: flex;
-    top: -38px;
+    /* top: -38px; */
     align-self: center;
     justify-self: center;
-    position: relative;
+    position: absolute;
     z-index: 100;
     height: 46px;
     background-color: #5661ea;
@@ -63,12 +63,13 @@ button {
 
 }
 
+
 #hangman {
     position: absolute;
     top: 17vh;
     left: 0px;
     align-self: center;
-
+    
 }
 
 .parts {
@@ -84,7 +85,7 @@ button {
     font-size: 5vw;
     color: #fff;
     border-radius: 5px;
-
+    
 }
 #play {
     position: fixed;
@@ -92,12 +93,24 @@ button {
     left: 0px;
 }
 
+.end{
+    justify-self: center;
+    position: absolute;
+    top: 200px;
+    display: none;
+    color: #FFF;
+}
+
+.played{
+    color: #555;
+}
+
 @media screen and (min-width: 640px) {
     #keyboard {
         grid-template-columns: repeat(20, 32px);
         grid-template-rows: repeat(6, 32px);
     }
-
+    
     .parts {
         position: absolute;
         width: 50vw;
