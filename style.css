@@ -29,7 +29,7 @@ button {
     position: absolute;
     z-index: 100;
     height: 46px;
-    background-color: #5661ea;
+    background-color: #5865f2;
     padding-left: 5px;
     padding-top: 5px;
     padding-bottom: 35px;
@@ -69,7 +69,7 @@ button {
     top: 17vh;
     left: 0px;
     align-self: center;
-    
+
 }
 
 .parts {
@@ -79,21 +79,27 @@ button {
 }
 
 .key {
-    border: 1px #313338 solid;
-    background-color: #232428;
+    border: 0px #23272a solid;
+    background-color: #23272a;
     transition: 0.3s;
     font-size: 5vw;
     color: #fff;
     border-radius: 5px;
-    
+    margin: 1px;
 }
+
+.keyHover{
+    box-shadow: 0px 8px 15px rgba(0,0,0,.5);
+    z-index: 1000;
+}
+
 #play {
     position: fixed;
     top: 0px;
     left: 0px;
 }
 
-.end{
+.end {
     justify-self: center;
     position: absolute;
     top: 200px;
@@ -101,8 +107,117 @@ button {
     color: #FFF;
 }
 
-.played{
+.played {
     color: #555;
+}
+
+#themeSelector {
+    border-radius: 5px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+}
+
+.collapsed {
+    width: 32px;
+    height: 32px;
+}
+
+.deployed {
+    background-color: #5865f2;
+    width: 300px;
+    height: 430px;
+}
+
+#brush {
+    width: 30px;
+    height: auto;
+    fill: #FFF;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    cursor: pointer;
+}
+
+#inputs {
+    width: 300px;
+    position: absolute;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    left: 5px;
+}
+
+#actual{
+    display: flex;
+    align-items: self-end;
+    flex-direction: column;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    
+}
+
+.actualColor{
+    height: 25px;
+    width: auto;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+#bottomThemeSelector{
+    width: 300px;
+    height: 390px;
+    position: absolute;
+    top: 40px;
+    border-top: 2px#4F5CD6 solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.inputColor {
+    width: 190px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 0px;
+}
+
+#topThemeSelector {
+    display: flex;
+    border-right: 2px #4F5CD6 solid;
+    height: 40px;
+    width: 260px;
+    padding-left: 5px;
+    /* border-bottom-right-radius: 5px; */
+}
+
+#explain {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+}
+
+#content {
+    display: flex;
+    transition: 0.3s;
+}
+
+#apply{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 5px;
+    border: 0px;
+    font-family: "Space Mono";
+    color: #FFF;
+    font-weight: bold;
+    background-color: #23272a;
 }
 
 @media screen and (min-width: 640px) {
@@ -110,7 +225,7 @@ button {
         grid-template-columns: repeat(20, 32px);
         grid-template-rows: repeat(6, 32px);
     }
-    
+
     .parts {
         position: absolute;
         width: 50vw;
@@ -128,12 +243,6 @@ button {
 }
 
 
-
-
-.key:hover {
-    background-color: #36373d;
-    cursor: pointer;
-}
 
 #a {
     grid-area: 1 / 1 / 3 / 3;
