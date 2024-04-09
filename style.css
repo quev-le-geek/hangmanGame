@@ -204,7 +204,7 @@ button {
 }
 
 #content {
-    display: flex;
+    display: none;
     transition: 0.3s;
 }
 

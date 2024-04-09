@@ -7,7 +7,6 @@ const keyboard = document.getElementById("keyboard")
 const key = document.querySelectorAll(".key")
 const game = document.getElementById("game")
 const hangman = document.getElementById("hangman").children;
-// const hangmanColor = querySelectorAll("rect")
 const looseTile = document.getElementById("loose")
 const winTitle = document.getElementById("win")
 const themeSelector = document.getElementById("themeSelector")
@@ -38,13 +37,24 @@ let dbLength = 1000
 let listenerSet = false
 let life = 0
 
-console.log(key);
+const actualTimeStamp = Date.now()
+const lastUpdate = JSON.parse(localStorage.getItem("lastUpdate"))
+const updateFreq = 24
 
+console.log("Update", Math.floor((actualTimeStamp - lastUpdate) / 1000 / 60 / 60), "hours ago");
 if (data == undefined) {
-    console.log("Has just been saved");
     getData(url, 0)
 }
-else {
+
+else if (actualTimeStamp == undefined) {
+    getData(url, 0)
+}
+
+else if ((actualTimeStamp - lastUpdate) >= (updateFreq * 60 * 60 * 60 * 1000)) {
+    getData(url, 0)
+}
+
+else if ((actualTimeStamp - lastUpdate) <= (updateFreq * 60 * 60 * 60 * 1000)) {
     data = JSON.parse(data)
     console.log("Already saved");
     init()
@@ -53,6 +63,8 @@ else {
 //get a file
 //inputs: url and the mode (look the function to learn more about the mode)
 async function getData(urlSet, mode) {
+    localStorage.setItem("lastUpdate", JSON.stringify(actualTimeStamp))
+    console.log("Has just been saved");
     const result = await fetch(urlSet)
     data = await result.json();
 
@@ -142,7 +154,7 @@ function removeListeners(keyName, index) {
     keyName[index].className = oldAtributes + " played"
 }
 
-function displayActualColors(){
+function displayActualColors() {
     actualColors[0].innerHTML = colors.background
     actualColors[1].innerHTML = colors.guess.bg
     actualColors[2].innerHTML = colors.guess.letters
@@ -199,7 +211,7 @@ function setColors() {
         atLeastOneColorChange = true
     }
 
-    if(atLeastOneColorChange == true){
+    if (atLeastOneColorChange == true) {
         changeColors()
         displayActualColors()
         atLeastOneColorChange = false
@@ -216,7 +228,6 @@ function changeColors() {
     }
 
     for (const element of hangman) {
-        console.log(element);
         element.setAttribute("fill", colors.hangman)
     }
 
@@ -236,7 +247,6 @@ function init() {
     if (listenerSet == false) {
         setListerners()
     }
-    console.time("ça prend")
     // console.log(data.data.length);
     var foundLetters = []
     const word = chooseWord().split("")
@@ -249,9 +259,6 @@ function init() {
     localStorage.setItem("numberOfFoundLetters", JSON.stringify(0))
     localStorage.setItem("usedLetters", JSON.stringify(["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]))
     console.log(word)
-
-    // console.log(key);
-    console.timeEnd("ça prend")
 
 }
 function looseGame(word) {
