@@ -3,8 +3,10 @@ body {
     background-color: #313338;
     display: flex;
     justify-content: center;
-    /* align-items: ; */
-    /* position: relative; */
+    /* height: 100vh;
+    width: 100vw; */
+    /* align-items: center;
+    position: absolute; */
 
     margin: 0px;
     font-family: "Space Mono", sans-serif;
@@ -19,12 +21,20 @@ button {
     align-self: self-start;
 }
 
-
-
 #game {
-    top: 200px;
+    bottom: 50px;
+    position: fixed;
     display: flex;
-    align-self: center;
+    width: 500px;
+    height: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+#guess {
+    display: flex;
     position: absolute;
     z-index: 100;
     height: 46px;
@@ -33,6 +43,18 @@ button {
     padding-top: 5px;
     padding-bottom: 15px;
     border-radius: 5px;
+    bottom: 312px;
+}
+
+
+#keyboard {
+    display: grid;
+    grid-template-columns: repeat(20, 18px);
+    grid-template-rows: repeat(6, 18px);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    position: absolute;
+    bottom: 0px;
 }
 
 .letter {
@@ -49,30 +71,17 @@ button {
     font-family: "Space Mono";
 }
 
-#keyboard {
-    display: grid;
-    grid-template-columns: repeat(20, 18px);
-    grid-template-rows: repeat(6, 18px);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    /* width: 400px;
-    height: 120px; */
-    position: absolute;
-    bottom: 50px;
-
-}
-
-
 #hangman {
-    position: absolute;
-    bottom: 300px;
+    position: fixed;
+    bottom: 650px;
+    left: calc(50vw - 100px);
     align-self: center;
 
 }
 
 .parts {
     position: absolute;
-    width: 256px;
+    width: 200px;
     height: auto;
     display: none;
 }
@@ -98,17 +107,17 @@ button {
     left: 0px;
 }
 
-#title{
+#title {
     display: flex;
-   justify-content: center;
-    position: absolute;
+    justify-content: center;
+    position: fixed;
     top: 50px;
     width: 300px;
 }
 
 .end {
     font-size: 32px;
-    position: absolute;
+    position: fixed;
     display: none;
     color: #FFF;
 }
@@ -227,29 +236,36 @@ button {
     background-color: #23272a;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 768px) {
     #keyboard {
         grid-template-columns: repeat(20, 32px);
         grid-template-rows: repeat(6, 32px);
+        margin-top: 300px;
     }
 
     .parts {
-        position: absolute;
-        width: 50vw;
-        height: auto;
+        position: fixed;
+        width: 400px;
+       height: auto;
+       /* overflow: visible; */
     }
 
-    #game {
+    #guess {
         padding-bottom: 45px;
-        top: 100px;
+        bottom: 50vh;
     }
 
-    .letter{
+    .letter {
         font-size: 64px;
     }
 
     .key {
         font-size: 32px;
+    }
+
+    #hangman {
+        left: 10px;
+        bottom: 95vh;
     }
 }
 
