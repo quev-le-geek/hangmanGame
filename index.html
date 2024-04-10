@@ -16,8 +16,10 @@
 <body>
     <!-- <button id="resetCache" class="other">reset</button> -->
     <!-- <button id="play" class="other">Play</button> -->
-    <h1 id="loose" class="end">You lose</h1>
-    <h1 id="win" class="end">You win</h1>
+    <div id="title">
+        <h1 id="loose" class="end">You lose</h1>
+        <h1 id="win" class="end">You win</h1>
+    </div>
     <div id="game">
     </div>
 
@@ -32,15 +34,26 @@
             </div>
             <div id="bottomThemeSelector">
                 <div id="inputs">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The background" id="inputColorBackground">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The background of guess zone"id="inputColorGuessBg">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The letter of guess zone"id="inputColorGuessLetters">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The underline of guess zone"id="inputColorGuessUnderline">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The hangman" id="inputColorHangman">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The key" id="inputColorKbBackground">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The key when you hover"id="inputColorKbHover">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The letter on the key" id="inputColorKbKey">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The keys when are used"id="inputColorKbUsed">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The background"
+                        id="inputColorBackground">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The background of guess zone"
+                        id="inputColorGuessBg">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The letter of guess zone"
+                        id="inputColorGuessLetters">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The underline of guess zone"
+                        id="inputColorGuessUnderline">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The hangman"
+                        id="inputColorHangman">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The key"
+                        id="inputColorKbBackground">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The key when you hover"
+                        id="inputColorKbHover">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The letter on the key"
+                        id="inputColorKbKey">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The keys when are used"
+                        id="inputColorKbUsed">
+                    <input class="inputColor" type="text" maxlength="7" placeholder="The background keys when are used"
+                        id="inputColorKbUsedBg">
                     <input class="inputColor" type="text" maxlength="7" placeholder="Titles" id="inputColorLetters">
                 </div>
                 <div id="actual">
@@ -53,6 +66,7 @@
                     <p class="actualColor" id="actualColorKbHover"></p>
                     <p class="actualColor" id="actualColorKbKey"></p>
                     <p class="actualColor" id="actualColorKbUsed"></p>
+                    <p class="actualColor" id="actualColorKbUsedBg"></p>
                     <p class="actualColor" id="actualColorLetters"></p>
                 </div>
                 <button id="apply">Apply</button>

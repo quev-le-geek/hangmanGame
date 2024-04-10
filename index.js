@@ -25,10 +25,11 @@ let colors = {
     },
     "hangman": "#ffffff",
     "keyboard": {
-        "bg": "#23272a",
+        "bg": "#1a1b1e",
         "hover": "#2c2f33",
         "key": "#ffffff",
-        "letterUsed": "#555555"
+        "letterUsed": "#555555",
+        "letterUsedBg": "#2c2f33"
     },
     "letters": "#ffffff"
 }
@@ -101,6 +102,26 @@ function write(wordToWrite) {
     }
 }
 
+//different style of keys
+function keyHoverStyle(keyNumber) {
+    const keyUsed = JSON.parse(localStorage.getItem("usedLetters"))
+    if (keyUsed[keyNumber] == "") {
+        key[keyNumber].style.zIndex = "1000"
+        key[keyNumber].style.boxShadow = "0px 8px 15px rgba(0,0,0,.5)"
+    }
+}
+
+function keyUnHoverStyle(keyNumber) {
+    key[keyNumber].style.removeProperty("box-shadow")
+    key[keyNumber].style.removeProperty("z-index")
+}
+
+function keyUsedStyle(keyNumber) {
+    key[keyNumber].style.backgroundColor = colors.keyboard.letterUsedBg
+    key[keyNumber].style.color = colors.keyboard.letterUsed
+}
+
+
 
 function setListerners() {
     document.addEventListener("keypress", (e) => {
@@ -114,15 +135,19 @@ function setListerners() {
     key.forEach((element, index) => {
         element.addEventListener('click', () => {
             keyPress(element.id, index)
+            keyUnHoverStyle(index)
         })
+
+        element.addEventListener('mousedown', () => {
+            keyUnHoverStyle(index)
+        })
+
         element.addEventListener('mouseenter', () => {
-            element.setAttribute("class", "key keyHover")
-            element.style.backgroundColor = colors.keyboard.hover
+            keyHoverStyle(index)
         })
 
         element.addEventListener('mouseleave', () => {
-            element.setAttribute("class", "key")
-            element.style.backgroundColor = colors.keyboard.bg
+            keyUnHoverStyle(index)
         })
     })
 
@@ -150,8 +175,6 @@ function removeListeners(keyName, index) {
     var usedLetters = JSON.parse(localStorage.getItem("usedLetters"))
     usedLetters[index] = keyName
     localStorage.setItem("usedLetters", JSON.stringify(usedLetters))
-    const oldAtributes = keyName[index].className
-    keyName[index].className = oldAtributes + " played"
 }
 
 function displayActualColors() {
@@ -164,7 +187,8 @@ function displayActualColors() {
     actualColors[6].innerHTML = colors.keyboard.hover
     actualColors[7].innerHTML = colors.keyboard.key
     actualColors[8].innerHTML = colors.keyboard.letterUsed
-    actualColors[9].innerHTML = colors.letters
+    actualColors[9].innerHTML = colors.keyboard.letterUsedBg
+    actualColors[10].innerHTML = colors.letters
 }
 
 function setColors() {
@@ -264,7 +288,7 @@ function init() {
 function looseGame(word) {
     reset(word)
     write(word)
-    looseTile.style.display = "block"
+    looseTile.style.display = "flex"
 
 }
 
@@ -275,10 +299,11 @@ function looseLife() {
 }
 
 function winGame() {
-    winTitle.style.display = "block"
+    winTitle.style.display = "flex"
 }
 
 function keyPress(keyName, number) {
+    keyUsedStyle(number)
     var usedLetters = JSON.parse(localStorage.getItem("usedLetters"))
     var found = false
     var foundLetters = JSON.parse(localStorage.getItem("foundLetters"))
@@ -296,7 +321,6 @@ function keyPress(keyName, number) {
                     numberOfFoundLetters++
                 }
             }
-            console.log(word == foundLetters, word[1] === foundLetters[1]);
             console.log(life);
             if (found == false) {
                 looseLife()
@@ -314,6 +338,8 @@ function keyPress(keyName, number) {
             reset(foundLetters)
             write(foundLetters)
         }
+
+        key[number].style.color = colors.keyboard.letterUsed
 
         localStorage.setItem("foundLetters", JSON.stringify(foundLetters))
         localStorage.setItem("numberOfFoundLetters", JSON.stringify(numberOfFoundLetters))

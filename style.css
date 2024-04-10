@@ -5,8 +5,7 @@ body {
     justify-content: center;
     /* align-items: ; */
     /* position: relative; */
-    width: 100vw;
-    height: 100vh;
+
     margin: 0px;
     font-family: "Space Mono", sans-serif;
 }
@@ -20,19 +19,19 @@ button {
     align-self: self-start;
 }
 
+
+
 #game {
-    /* border: 1px #fff solid; */
+    top: 200px;
     display: flex;
-    /* top: -38px; */
     align-self: center;
-    justify-self: center;
     position: absolute;
     z-index: 100;
     height: 46px;
     background-color: #5865f2;
     padding-left: 5px;
     padding-top: 5px;
-    padding-bottom: 35px;
+    padding-bottom: 15px;
     border-radius: 5px;
 }
 
@@ -40,7 +39,7 @@ button {
     /* position: relative;   */
     /* top: 50px;   */
     color: #FFF;
-    font-size: 64px;
+    font-size: 32px;
     align-self: center;
     padding: 5px;
     padding-bottom: 0px;
@@ -52,8 +51,8 @@ button {
 
 #keyboard {
     display: grid;
-    grid-template-columns: repeat(20, 5vw);
-    grid-template-rows: repeat(6, 5vw);
+    grid-template-columns: repeat(20, 18px);
+    grid-template-rows: repeat(6, 18px);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     /* width: 400px;
@@ -66,15 +65,15 @@ button {
 
 #hangman {
     position: absolute;
-    top: 17vh;
-    left: 0px;
+    bottom: 300px;
     align-self: center;
 
 }
 
 .parts {
     position: absolute;
-    width: 60vw;
+    width: 256px;
+    height: auto;
     display: none;
 }
 
@@ -82,16 +81,16 @@ button {
     border: 0px #23272a solid;
     background-color: #23272a;
     transition: 0.3s;
-    font-size: 5vw;
+    font-size: 18px;
     color: #fff;
     border-radius: 5px;
     margin: 1px;
 }
 
-.keyHover{
+/* .keyHover{
     box-shadow: 0px 8px 15px rgba(0,0,0,.5);
     z-index: 1000;
-}
+} */
 
 #play {
     position: fixed;
@@ -99,17 +98,25 @@ button {
     left: 0px;
 }
 
-.end {
-    justify-self: center;
+#title{
+    display: flex;
+   justify-content: center;
     position: absolute;
-    top: 200px;
+    top: 50px;
+    width: 300px;
+}
+
+.end {
+    font-size: 32px;
+    position: absolute;
     display: none;
     color: #FFF;
 }
 
-.played {
+/* .played {
     color: #555;
-}
+    background-color: #313338;
+} */
 
 #themeSelector {
     border-radius: 5px;
@@ -126,7 +133,7 @@ button {
 .deployed {
     background-color: #5865f2;
     width: 300px;
-    height: 430px;
+    height: 460px;
 }
 
 #brush {
@@ -148,17 +155,17 @@ button {
     left: 5px;
 }
 
-#actual{
+#actual {
     display: flex;
     align-items: self-end;
     flex-direction: column;
     position: absolute;
     top: 0px;
     right: 5px;
-    
+
 }
 
-.actualColor{
+.actualColor {
     height: 25px;
     width: auto;
     font-weight: bold;
@@ -167,9 +174,9 @@ button {
     color: #fff;
 }
 
-#bottomThemeSelector{
+#bottomThemeSelector {
     width: 300px;
-    height: 390px;
+    height: 420px;
     position: absolute;
     top: 40px;
     border-top: 2px#4F5CD6 solid;
@@ -208,7 +215,7 @@ button {
     transition: 0.3s;
 }
 
-#apply{
+#apply {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -232,10 +239,14 @@ button {
         height: auto;
     }
 
-    /* #game{
-        width: 100vw;
-        height: 1px;
-    } */
+    #game {
+        padding-bottom: 45px;
+        top: 100px;
+    }
+
+    .letter{
+        font-size: 64px;
+    }
 
     .key {
         font-size: 32px;
@@ -246,6 +257,7 @@ button {
 
 #a {
     grid-area: 1 / 1 / 3 / 3;
+    margin-left: 0px;
 }
 
 #z {
