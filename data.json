@@ -120,7 +120,7 @@
         "cause",
         "couvrir",
         "encore",
-        "français",
+        "france",
         "arbre",
         "crier",
         "enfant",
@@ -179,7 +179,7 @@
         "dernier",
         "grand",
         "autant",
-        "derrière",
+        "derriere",
         "long",
         "puisque",
         "sentir",
@@ -220,7 +220,6 @@
         "nouvelle",
         "maison",
         "maitre",
-        "peut-être",
         "raconter",
         "objet",
         "piece",
@@ -384,7 +383,13 @@
         "information",
         "profil",
         "animation",
-        "education"
+        "education",
+        "naturelle",
+        "pondre",
+        "sucre",
+        "veste",
+        "plante",
+        "rapide"
         
     ]
 }
