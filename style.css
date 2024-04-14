@@ -160,11 +160,11 @@ body[data-theme=light]>#game>#keyboard>.key[data-state=used] {
     display: none;
 }
 
-body[data-theme=dark]>.end {
+body[data-theme=dark] > #title > .end {
     color: #FFF;
 }
 
-.end[data-theme=light] {
+body[data-theme=light] > #title > .end {
     color: #000;
 }
 
