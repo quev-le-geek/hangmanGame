@@ -1,48 +1,47 @@
-// const resteCache = document.getElementById("resetCache")
-// const play = document.getElementById("play")
+const restart = document.getElementById("replay")
+const restartIcon = document.getElementById("replayIcon")
+// const gameMode = document.getElementById("gameMode")
 const url = "./data.json"
 var data = localStorage.getItem("data")
 const body = document.body
 const keyboard = document.getElementById("keyboard")
 const key = document.querySelectorAll(".key")
+let nbKeyUsed = 0
 const game = document.getElementById("guess")
 const hangman = document.getElementById("hangman").children;
 const looseTile = document.getElementById("loose")
 const winTitle = document.getElementById("win")
 const themeSelector = document.getElementById("themeSelector")
-let themeSelectorCollaped = true
-const brush = document.getElementById("brush")
-const content = document.getElementById("content")
-const inputColors = document.querySelectorAll(".inputColor")
-const actualColors = document.querySelectorAll(".actualColor")
-const apply = document.getElementById("apply")
-let colors = {
-    "background": "#313338",
-    "guess": {
-        "bg": "#5865f2",
-        "letters": "#ffffff",
-        "underline": "#ffffff"
-    },
-    "hangman": "#ffffff",
-    "keyboard": {
-        "bg": "#1a1b1e",
-        "hover": "#2c2f33",
-        "key": "#ffffff",
-        "letterUsed": "#555555",
-        "letterUsedBg": "#2c2f33"
-    },
-    "letters": "#ffffff"
-}
+const moon = document.getElementById("moon")
+const sun = document.getElementById("sun")
+
 let word
 let dbLength = 1000
 let listenerSet = false
 let life = 0
 
+function changeTheme(){
+    if (darkMode == true) {
+        body.setAttribute("data-theme", "light")
+    }
+    else{
+        body.setAttribute("data-theme", "dark")
+    }
+}
+
+let darkMode = JSON.parse(localStorage.getItem("darkMode"))
+if (darkMode == undefined) {
+    darkMode = true
+    localStorage.setItem("darkMode", darkMode)
+}
+changeTheme()
+
 const actualTimeStamp = Date.now()
 const lastUpdate = JSON.parse(localStorage.getItem("lastUpdate"))
+const timeElapsed = (actualTimeStamp - lastUpdate) / 1000 / 60 / 60
 const updateFreq = 24
 
-console.log("Update", Math.floor((actualTimeStamp - lastUpdate) / 1000 / 60 / 60), "hours ago");
+console.log("Update", Math.floor(timeElapsed * 100) / 100, "hours ago");
 if (data == undefined) {
     getData(url, 0)
 }
@@ -51,11 +50,11 @@ else if (actualTimeStamp == undefined) {
     getData(url, 0)
 }
 
-else if ((actualTimeStamp - lastUpdate) >= (updateFreq * 60 * 60 * 60 * 1000)) {
+else if (Math.floor(timeElapsed) >= (updateFreq)) {
     getData(url, 0)
 }
 
-else if ((actualTimeStamp - lastUpdate) <= (updateFreq * 60 * 60 * 60 * 1000)) {
+else if (Math.floor(timeElapsed) <= (updateFreq)) {
     data = JSON.parse(data)
     console.log("Already saved");
     init()
@@ -88,7 +87,6 @@ function chooseWord() { //return a random word from the list
     // console.log(random);
     const word = data.data[random]
     return word
-    console.log(word);
 }
 
 function write(wordToWrite) {
@@ -103,69 +101,17 @@ function write(wordToWrite) {
 }
 
 //different style of keys
-function keyHoverStyle(keyNumber) {
-    const keyUsed = JSON.parse(localStorage.getItem("usedLetters"))
-    if (keyUsed[keyNumber] == "") {
-        key[keyNumber].style.zIndex = "1000"
-        key[keyNumber].style.boxShadow = "0px 8px 15px rgba(0,0,0,.5)"
-    }
-}
-
-function keyUnHoverStyle(keyNumber) {
-    key[keyNumber].style.removeProperty("box-shadow")
-    key[keyNumber].style.removeProperty("z-index")
-}
-
-function keyUsedStyle(keyNumber) {
-    key[keyNumber].style.backgroundColor = colors.keyboard.letterUsedBg
-    key[keyNumber].style.color = colors.keyboard.letterUsed
-}
-
-
 
 function setListerners() {
     document.addEventListener("keypress", (e) => {
         keyPress(e.key, e.key.charCodeAt(0) - 97)
     })
 
-    document.addEventListener("load", () => {
-        changeColors()
-    })
-
     key.forEach((element, index) => {
         element.addEventListener('click', () => {
             keyPress(element.id, index)
-            keyUnHoverStyle(index)
+            nbKeyUsed++
         })
-
-        element.addEventListener('mousedown', () => {
-            keyUnHoverStyle(index)
-        })
-
-        element.addEventListener('mouseenter', () => {
-            keyHoverStyle(index)
-        })
-
-        element.addEventListener('mouseleave', () => {
-            keyUnHoverStyle(index)
-        })
-    })
-
-    brush.addEventListener("click", () => {
-        if (themeSelectorCollaped == true) {
-            themeSelector.setAttribute("class", "deployed")
-            content.style.display = "flex"
-            themeSelectorCollaped = !themeSelectorCollaped
-        }
-        else {
-            themeSelector.setAttribute("class", "collapsed")
-            content.style.display = "none"
-            themeSelectorCollaped = !themeSelectorCollaped
-        }
-    })
-
-    apply.addEventListener('click', () => {
-        setColors()
     })
 
     listenerSet = true
@@ -173,101 +119,14 @@ function setListerners() {
 
 function removeListeners(keyName, index) {
     var usedLetters = JSON.parse(localStorage.getItem("usedLetters"))
-    usedLetters[index] = keyName
+    usedLetters[index] = keyName[index].id
     localStorage.setItem("usedLetters", JSON.stringify(usedLetters))
 }
 
-function displayActualColors() {
-    actualColors[0].innerHTML = colors.background
-    actualColors[1].innerHTML = colors.guess.bg
-    actualColors[2].innerHTML = colors.guess.letters
-    actualColors[3].innerHTML = colors.guess.underline
-    actualColors[4].innerHTML = colors.hangman
-    actualColors[5].innerHTML = colors.keyboard.bg
-    actualColors[6].innerHTML = colors.keyboard.hover
-    actualColors[7].innerHTML = colors.keyboard.key
-    actualColors[8].innerHTML = colors.keyboard.letterUsed
-    actualColors[9].innerHTML = colors.keyboard.letterUsedBg
-    actualColors[10].innerHTML = colors.letters
-}
-
-function setColors() {
-    console.log(inputColors, colors[0])
-    let atLeastOneColorChange = false
-    if (inputColors[0].value != "") {
-        colors.background = inputColors[0].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[1].value != "") {
-        colors.guess.bg = inputColors[1].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[2].value != "") {
-        colors.guess.letters = inputColors[2].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[3].value != "") {
-        colors.guess.underline = inputColors[3].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[4].value != "") {
-        colors.hangman = inputColors[4].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[5].value != "") {
-        colors.keyboard.bg = inputColors[5].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[6].value != "") {
-        colors.keyboard.hover = inputColors[6].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[7].value != "") {
-        colors.keyboard.key = inputColors[7].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[8].value != "") {
-        colors.keyboard.letterUsed = inputColors[8].value
-        atLeastOneColorChange = true
-    }
-    if (inputColors[9].value != "") {
-        colors.letters = inputColors[9].value
-        atLeastOneColorChange = true
-    }
-
-    if (atLeastOneColorChange == true) {
-        changeColors()
-        displayActualColors()
-        atLeastOneColorChange = false
-    }
-}
-
-function changeColors() {
-    body.style.backgroundColor = colors.background;
-    game.style.backgroundColor = colors.guess.bg;
-
-    for (const element of game.children) {
-        element.style.color = colors.guess.letters;
-        element.style.borderColor = colors.guess.underline;
-    }
-
-    for (const element of hangman) {
-        element.setAttribute("fill", colors.hangman)
-    }
-
-    for (const element of key) {
-        element.style.backgroundColor = colors.keyboard.bg
-        element.style.color = colors.keyboard.key
-    }
-
-
-}
-
-
-
 function init() {
-    displayActualColors()
-    changeColors()
+    for (const element of key) {
+        element.setAttribute("data-state","playble")
+    }
     if (listenerSet == false) {
         setListerners()
     }
@@ -303,20 +162,18 @@ function winGame() {
 }
 
 function keyPress(keyName, number) {
-    keyUsedStyle(number)
+    key[number].setAttribute("data-state","used")
     var usedLetters = JSON.parse(localStorage.getItem("usedLetters"))
     var found = false
     var foundLetters = JSON.parse(localStorage.getItem("foundLetters"))
     var numberOfFoundLetters = JSON.parse(localStorage.getItem("numberOfFoundLetters"))
     const word = JSON.parse(localStorage.getItem("word"))
     if (usedLetters[number] == "") {
-        console.log("usedLetters[", number, "] == ''", usedLetters[number] == "");
         if (life <= 9) {
             for (let i = 0; i < word.length; i++) {
                 const letter = word[i];
                 if (keyName == letter) {
                     foundLetters[i] = keyName
-                    console.log(foundLetters);
                     found = true
                     numberOfFoundLetters++
                 }
@@ -339,8 +196,6 @@ function keyPress(keyName, number) {
             write(foundLetters)
         }
 
-        key[number].style.color = colors.keyboard.letterUsed
-
         localStorage.setItem("foundLetters", JSON.stringify(foundLetters))
         localStorage.setItem("numberOfFoundLetters", JSON.stringify(numberOfFoundLetters))
         localStorage.setItem("usedLetters", JSON.stringify(usedLetters))
@@ -356,8 +211,21 @@ function reset(word) {
     }
 }
 
-// play.addEventListener('click', () => {
-//     const word = JSON.parse(localStorage.getItem("word"))
-//     reset(word)
-//     init()
-// })
+restart.addEventListener('click', () => {
+    const word = JSON.parse(localStorage.getItem("word"))
+    for (const element of hangman) {
+        element.style.display = "none"
+    }
+    reset(word)
+    winTitle.style.display = "none"
+    looseTile.style.display = "none"
+    life = 0
+    init()
+})
+
+
+themeSelector.addEventListener('click', () => {
+    darkMode = !darkMode
+    localStorage.setItem("darkMode", JSON.stringify(darkMode))
+    changeTheme()
+})

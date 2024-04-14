@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 
 <head>
     <meta charset="UTF-8">
@@ -21,7 +21,18 @@
         <h1 id="win" class="end">You win</h1>
     </div>
 
+
+
     <div id="game">
+
+        <button id="replay">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" id="replayIcon">
+                <path
+                    d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z" />
+            </svg>
+            Restart
+        </button>
+
         <div id="guess">
         </div>
 
@@ -55,7 +66,7 @@
         </div>
     </div>
 
-    <div id="hangman">
+    <div id="hangman" data-theme="light">
 
         <svg width="512" height="512" viewBox="0 0 890 550" version="1.1" id="base" class="parts"
             xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -121,8 +132,8 @@
             <defs id="defs1" />
             <g id="layer12">
                 <g id="layer9" transform="translate(0,500)">
-                    <rect style="stroke-width:0.677686" id="rect48" width="25.060509"
-                        height="165.39935" x="-731.07733" y="357.21167" ry="12.530254" rx="12.530254"
+                    <rect style="stroke-width:0.677686" id="rect48" width="25.060509" height="165.39935" x="-731.07733"
+                        y="357.21167" ry="12.530254" rx="12.530254"
                         transform="matrix(-0.70539868,0.70881076,0.70539868,0.70881076,0,0)" />
                 </g>
             </g>
@@ -166,56 +177,27 @@
 
 
 
-    <div id="themeSelector" class="collaped">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" id="brush">
+    <div id="themeSelector" data-theme="dark">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" id="moon" class="theme">
             <path
-                d="M440-80q-33 0-56.5-23.5T360-160v-160H240q-33 0-56.5-23.5T160-400v-280q0-66 47-113t113-47h480v440q0 33-23.5 56.5T720-320H600v160q0 33-23.5 56.5T520-80h-80ZM240-560h480v-200h-40v160h-80v-160h-40v80h-80v-80H320q-33 0-56.5 23.5T240-680v120Zm0 160h480v-80H240v80Zm0 0v-80 80Z" />
+                d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z" />
+
         </svg>
-        <div id="content">
-            <div id="topThemeSelector">
-                <p id="explain">You can change here the theme of:</p>
-            </div>
-            <div id="bottomThemeSelector">
-                <div id="inputs">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The background"
-                        id="inputColorBackground">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The background of guess zone"
-                        id="inputColorGuessBg">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The letter of guess zone"
-                        id="inputColorGuessLetters">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The underline of guess zone"
-                        id="inputColorGuessUnderline">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The hangman"
-                        id="inputColorHangman">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The key"
-                        id="inputColorKbBackground">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The key when you hover"
-                        id="inputColorKbHover">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The letter on the key"
-                        id="inputColorKbKey">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The keys when are used"
-                        id="inputColorKbUsed">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="The background keys when are used"
-                        id="inputColorKbUsedBg">
-                    <input class="inputColor" type="text" maxlength="7" placeholder="Titles" id="inputColorLetters">
-                </div>
-                <div id="actual">
-                    <p class="actualColor" id="actualColorBackground"></p>
-                    <p class="actualColor" id="actualColorGuessBg"></p>
-                    <p class="actualColor" id="actualColorGuessLetters"></p>
-                    <p class="actualColor" id="actualColorGuessUnderline"></p>
-                    <p class="actualColor" id="actualColorHangman"></p>
-                    <p class="actualColor" id="actualColorKbBackground"></p>
-                    <p class="actualColor" id="actualColorKbHover"></p>
-                    <p class="actualColor" id="actualColorKbKey"></p>
-                    <p class="actualColor" id="actualColorKbUsed"></p>
-                    <p class="actualColor" id="actualColorKbUsedBg"></p>
-                    <p class="actualColor" id="actualColorLetters"></p>
-                </div>
-                <button id="apply">Apply</button>
-            </div>
-        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" id="sun" class="theme">
+            <path
+                d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z" />
+        </svg>
     </div>
+    <footer>
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+            <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png" alt="hangmanGame © 2024 by EnolaK64 is licensed under CC BY-NC-SA 4.0" title="hangmanGame © 2024 by EnolaK64 is licensed under CC BY-NC-SA 4.0" id="licence">
+        </a>
+        <a href="https://github.com/EnolaK64/hangmanGame">
+            <img src="./assets/github-mark.svg" alt="github-mark" id="githubMark" class="github" title="See source Code">
+            <img src="./assets/github-markWhite.svg" alt="github-mark" id="githubMarkWhite" class="github" title="See source Code">
+        </a>
+    </footer>
     <script src="./index.js"></script>
 </body>
 
