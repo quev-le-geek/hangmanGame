@@ -355,11 +355,35 @@ function init(isV2) {
         fetchDefinition(word.join(""))
     }
     else if (isV2 == true) {
-        word = prompt("Choose a word")
-        if (word == "" || word == null) {
+        word = prompt("Choose a word (english alphabet only)")
+        const validChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        let validCharFound
+        for (const letter of word.split("")) {
+            validCharFound = false
+            for (const validLetter of validChars) {
+                console.log("letter", letter, "validLetter", validLetter)
+                if (letter == validLetter) {
+                    validCharFound = true
+                    console.log("validWord");
+                }
+            }
+            if (validCharFound == false) {
+                break;
+            }
+        }
+        console.log(validCharFound);
+
+
+        const gameMode = body.getAttribute("data-gameMode")
+        if (validCharFound == false) {
             alert("Please choose a valid word")
             console.log("Please choose a valid word")
-            body.setAttribute("data-gameMode", "classic")
+            if(gameMode == "classic"){
+                body.setAttribute("data-gameMode", "classic") 
+            }
+            else{
+                body.setAttribute("data-gameMode", "v2")
+            }
             return
         }
 
@@ -367,7 +391,12 @@ function init(isV2) {
             const lastWord = JSON.parse(localStorage.getItem("word"))
             console.log(lastWord);
             reset(lastWord)
-            body.setAttribute("data-gameMode", "v2")
+            if(gameMode == "classic"){
+                body.setAttribute("data-gameMode", "v2")
+            }
+            else{
+                body.setAttribute("data-gameMode", "classic") 
+            }
             word = word.toLocaleLowerCase()
             word = word.split("")
             console.log(word);
