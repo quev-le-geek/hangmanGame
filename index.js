@@ -238,6 +238,7 @@ function setListerners() {
         if (gameMode == "v2") {
             init(true)
         }
+        hasWin = false
     })
 
     definition.addEventListener("click", () => {
