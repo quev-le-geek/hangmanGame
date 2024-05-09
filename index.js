@@ -35,6 +35,9 @@ if (lang == undefined) {
     else if (lang.startsWith("en")) {
         lang = "en"
     }
+    else if (lang.startsWith("es")) {
+        lang = "es"
+    }
     else {
         lang = "en"
     }
