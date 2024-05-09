@@ -389,7 +389,6 @@
         "sucre",
         "veste",
         "plante",
-<<<<<<< HEAD
         "rapide"
     ],
 
@@ -836,8 +835,7 @@
         "wonder",
         "worker",
         "writer",
-        "yourself"
-=======
+        "yourself",
         "rapide",
         "aurore",
         "zenith",
@@ -881,8 +879,5 @@
         "ligne",
         "lentement",
         "taille"
-        
-        
->>>>>>> 1b7a7b9260b283b1952f4f1eda5786cbd668e2c8
     ]
 }
