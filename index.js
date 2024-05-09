@@ -87,7 +87,6 @@ console.log("Update", Math.floor(timeElapsed * 100) / 100, "hours ago");
 let UpdateTime = "Last update: " + Math.floor(timeElapsed * 10) / 10 + "h"
 dbInfo.innerHTML = UpdateTime
 if (data == undefined) {
-    debugger
     getData(url, 0)
 }
 
@@ -477,6 +476,3 @@ function reset(word) {
         game.removeChild(game.lastElementChild)
     }
 }
-
-
-
