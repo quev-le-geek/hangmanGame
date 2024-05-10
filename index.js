@@ -338,7 +338,9 @@ function restartGame() {
     for (const element of key) {
         element.setAttribute("data-state", "playble")
     }
-
+    
+    definition.setAttribute("data-alreadyDeployed", "false")
+    definition.setAttribute("data-space", "collapsed")
 }
 
 function init(isV2) {
