@@ -238,9 +238,8 @@ function setListerners() {
         }
 
         if (gameMode == "v2") {
-            init(true)
+            init(true, "chooseWord")
         }
-        hasWin = false
     })
 
     definition.addEventListener("click", () => {
@@ -338,12 +337,13 @@ function restartGame() {
     for (const element of key) {
         element.setAttribute("data-state", "playble")
     }
-    
+
     definition.setAttribute("data-alreadyDeployed", "false")
     definition.setAttribute("data-space", "collapsed")
+    hasWin = false
 }
 
-function init(isV2) {
+function init(isV2, initiator) {
     // for (const element of key) {
     //     element.setAttribute("data-state", "playble")
     // }
@@ -359,9 +359,11 @@ function init(isV2) {
         fetchDefinition(word.join(""))
     }
     else if (isV2 == true) {
-        word = prompt("Choose a word (english alphabet only)")
-        const validChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        word = prompt("Choose a word (english alphabet letters only)")
         let validCharFound
+        console.log((word != null || word != "") == false);
+        if(word != null && word != ""){
+        const validChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
         for (const letter of word.split("")) {
             validCharFound = false
             for (const validLetter of validChars) {
@@ -375,6 +377,10 @@ function init(isV2) {
                 break;
             }
         }
+    }
+    else{
+        validCharFound = false
+    }
         console.log(validCharFound);
 
 
@@ -382,10 +388,10 @@ function init(isV2) {
         if (validCharFound == false) {
             alert("Please choose a valid word")
             console.log("Please choose a valid word")
-            if(gameMode == "classic"){
-                body.setAttribute("data-gameMode", "classic") 
+            if (gameMode == "classic") {
+                body.setAttribute("data-gameMode", "classic")
             }
-            else{
+            else {
                 body.setAttribute("data-gameMode", "v2")
             }
             return
@@ -394,12 +400,18 @@ function init(isV2) {
         else {
             const lastWord = JSON.parse(localStorage.getItem("word"))
             console.log(lastWord);
+            restartGame()
             reset(lastWord)
-            if(gameMode == "classic"){
+            if (gameMode == "classic") {
                 body.setAttribute("data-gameMode", "v2")
             }
-            else{
-                body.setAttribute("data-gameMode", "classic") 
+            else {
+                if(initiator == "chooseWord"){
+                    body.setAttribute("data-gameMode", "v2")
+                }
+                else{
+                    body.setAttribute("data-gameMode", "classic")
+                }
             }
             word = word.toLocaleLowerCase()
             word = word.split("")
